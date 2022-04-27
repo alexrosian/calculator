@@ -1,0 +1,66 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background: #ece9e6; /* fallback for old browsers */
+}
+
+.calculator {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+}
+
+.calculator > button {
+  cursor: pointer;
+  color: white;
+  font-size: 2rem;
+  background-image: linear-gradient(to right, #d66d75, #e29587);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100%;
+  border-radius: 100%;
+  border: #ece9e6 10px solid;
+  gap: 10px;
+}
+
+.span-two {
+  grid-column: span 2;
+  border-radius: 30px !important;
+}
+
+.calculator-display {
+  grid-column: 1/-1;
+  background: linear-gradient(to right, #d66d75, #e29587);
+  height: 80%;
+  border-radius: 30px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 10px 20px 10px 20px;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.previous-value {
+  font-size: 1rem;
+  color: rgb(255, 255, 255, 0.5);
+  font-weight: 700;
+}
+
+.current-value {
+  font-size: 2rem;
+  color: rgb(255, 255, 255, 1);
+  font-weight: 700;
+}
