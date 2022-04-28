@@ -20,6 +20,10 @@ body {
   grid-template-rows: minmax(120px, auto) repeat(5, 100px);
 }
 
+.is-depressed {
+  border: #d66d75 5px solid !important;
+}
+
 .calculator > button {
   cursor: pointer;
   color: white;
@@ -63,4 +67,8 @@ body {
   font-size: 2rem;
   color: rgb(255, 255, 255, 1);
   font-weight: 700;
+}
+
+.is-depressed {
+  border: black 10px solid;
 }
