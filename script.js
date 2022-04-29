@@ -2,16 +2,16 @@
 const calculate = (v1, operator, v2) => {
   let result = "";
 
-  if (operator === "add") {
+  if (operator === "+") {
     result = parseFloat(v1) + parseFloat(v2);
   }
-  if (operator === "subtract") {
+  if (operator === "-") {
     result = parseFloat(v1) - parseFloat(v2);
   }
-  if (operator === "multiply") {
+  if (operator === "x") {
     result = parseFloat(v1) * parseFloat(v2);
   }
-  if (operator === "divide") {
+  if (operator === "÷") {
     result = parseFloat(v1) / parseFloat(v2);
   }
 
@@ -20,7 +20,8 @@ const calculate = (v1, operator, v2) => {
 
 const keys = document.querySelector(".calculator");
 const display = document.querySelector(".current-value");
-
+const history = document.querySelector(".previous-value");
+let historytest = "";
 keys.addEventListener("click", (button) => {
   if (button.target.matches("button")) {
     const key = button.target;
@@ -28,6 +29,17 @@ keys.addEventListener("click", (button) => {
     const keyContent = key.textContent;
     const displayNumber = display.textContent;
     const previousKeyType = keys.dataset.previousKeyType;
+    const historyNumber = history.textContent;
+
+    if (action != "calculate" && action != "backspace") {
+      historytest += keyContent;
+      history.textContent = historytest;
+      // if (action === "decimal") {
+      //   if (!historyNumber.includes(".")) {
+      //     history.textContent = historyNumber + ".";
+      //   }
+      // }
+    }
 
     // Remove .is-depressed class from all keys
     Array.from(key.parentNode.children).forEach((k) =>
@@ -46,12 +58,7 @@ keys.addEventListener("click", (button) => {
       }
       keys.dataset.previousKeyType = "number";
     }
-    if (
-      action === "add" ||
-      action === "subtract" ||
-      action === "divide" ||
-      action === "multiply"
-    ) {
+    if (action === "+" || action === "-" || action === "÷" || action === "x") {
       const firstValue = keys.dataset.firstValue;
       const operator = keys.dataset.operator;
       const secondValue = displayNumber;
@@ -63,6 +70,7 @@ keys.addEventListener("click", (button) => {
         previousKeyType !== "calculate"
       ) {
         const calcValue = calculate(firstValue, operator, secondValue);
+
         display.textContent = calcValue;
         keys.dataset.firstValue = calcValue;
       } else {
@@ -74,11 +82,13 @@ keys.addEventListener("click", (button) => {
       keys.dataset.operator = action;
     }
     if (action === "decimal") {
-      if (!displayNumber.includes(".")) {
+      if (!displayNumber.includes(".") && !historyNumber.includes(".")) {
         display.textContent = displayNumber + ".";
+        history.textContent = historyNumber + ".";
       }
       if (previousKeyType === "operator" || previousKeyType === "calculate") {
         display.textContent = "0.";
+        history.textContent = "0.";
       }
       keys.dataset.previousKeyType = "decimal";
     }
@@ -88,9 +98,13 @@ keys.addEventListener("click", (button) => {
       keys.dataset.operator = "";
       keys.dataset.previousKeyType = "";
       display.textContent = 0;
+      history.textContent = 0;
+      historytest = "";
     }
     if (action === "backspace") {
       display.textContent = displayNumber.slice(0, -1);
+      history.textContent = historyNumber.slice(0, -1);
+      historytest = historyNumber.slice(0, -1);
       if (display.textContent === "") {
         keys.dataset.firstValue = "";
         keys.dataset.modValue = "";
@@ -100,6 +114,7 @@ keys.addEventListener("click", (button) => {
       }
       keys.dataset.previousKeyType = "backspace";
     }
+
     if (action === "calculate") {
       let firstValue = keys.dataset.firstValue;
       const operator = keys.dataset.operator;
@@ -110,6 +125,7 @@ keys.addEventListener("click", (button) => {
           firstValue = displayNumber;
           secondValue = keys.dataset.modValue;
         }
+
         display.textContent = calculate(firstValue, operator, secondValue);
       }
       keys.dataset.modValue = secondValue;
