@@ -1,27 +1,17 @@
 //Calculation function
 const calculate = (v1, operator, v2) => {
-  let result = "";
-
-  if (operator === "+") {
-    result = parseFloat(v1) + parseFloat(v2);
-  }
-  if (operator === "-") {
-    result = parseFloat(v1) - parseFloat(v2);
-  }
-  if (operator === "x") {
-    result = parseFloat(v1) * parseFloat(v2);
-  }
-  if (operator === "÷") {
-    result = parseFloat(v1) / parseFloat(v2);
-  }
-
-  return result;
+  const firstNum = parseFloat(v1);
+  const secondNum = parseFloat(v2);
+  if (operator === "+") return firstNum + secondNum;
+  if (operator === "-") return firstNum - secondNum;
+  if (operator === "x") return firstNum * secondNum;
+  if (operator === "÷") return firstNum / secondNum;
 };
 
 const keys = document.querySelector(".calculator");
 const display = document.querySelector(".current-value");
 const history = document.querySelector(".previous-value");
-let historytest = "";
+let historyData = "";
 keys.addEventListener("click", (button) => {
   if (button.target.matches("button")) {
     const key = button.target;
@@ -32,8 +22,8 @@ keys.addEventListener("click", (button) => {
     const historyNumber = history.textContent;
 
     if (action != "calculate" && action != "backspace") {
-      historytest += keyContent;
-      history.textContent = historytest;
+      historyData += keyContent;
+      history.textContent = historyData;
       // if (action === "decimal") {
       //   if (!historyNumber.includes(".")) {
       //     history.textContent = historyNumber + ".";
@@ -99,12 +89,12 @@ keys.addEventListener("click", (button) => {
       keys.dataset.previousKeyType = "";
       display.textContent = 0;
       history.textContent = 0;
-      historytest = "";
+      historyData = "";
     }
     if (action === "backspace") {
       display.textContent = displayNumber.slice(0, -1);
       history.textContent = historyNumber.slice(0, -1);
-      historytest = historyNumber.slice(0, -1);
+      historyData = historyNumber.slice(0, -1);
       if (display.textContent === "") {
         keys.dataset.firstValue = "";
         keys.dataset.modValue = "";
